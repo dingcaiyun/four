@@ -42,7 +42,9 @@ class UsersController extends Controller {
 	}
 
 	public function show(User $user) {
-		return view('users.show', compact('user'));
+		$statuses = $user->feed()->paginate(30);
+
+		return view('users.show', compact('user', 'statuses'));
 	}
 
 	public function edit(User $user) {
@@ -104,4 +106,5 @@ class UsersController extends Controller {
 		session()->flash('success', '恭喜你，激活成功！');
 		return redirect()->route('users.show', compact('user'));
 	}
+
 }
